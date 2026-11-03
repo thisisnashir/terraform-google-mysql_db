@@ -36,7 +36,7 @@ locals {
   ]
   db_flags_master_instance = [for key, val in var.db_flags_master_instance : { name = key, value = val }]
   db_flags_read_replica    = [for key, val in var.db_flags_read_replica : { name = key, value = val }]
-  backup_location          = var.backup_enabled ? coalesce(var.backup_location, local.region_master_instance) : null
+  backup_location          = coalesce(var.backup_location, local.region_master_instance)
 }
 
 data "google_client_config" "google_client" {}
@@ -67,7 +67,7 @@ module "google_mysql_db" {
   zone                            = local.zone_master_instance
   availability_type               = var.highly_available ? "REGIONAL" : null
   tier                            = var.instance_size_master_instance
-  edition                         = var.edition
+  edition                         = coalesce(var.edition, "ENTERPRISE")
   disk_size                       = var.disk_size_gb_master_instance
   disk_autoresize                 = var.disk_auto_resize_master_instance
   disk_autoresize_limit           = var.disk_auto_resize_limit_master_instance

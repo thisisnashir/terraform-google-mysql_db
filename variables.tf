@@ -89,7 +89,7 @@ variable "instance_size_master_instance" {
 variable "edition" {
   description = "The edition of the instance, either ENTERPRISE or ENTERPRISE_PLUS."
   type        = string
-  default     = null
+  default     = "ENTERPRISE"
 }
 
 variable "instance_size_read_replica" {
